@@ -12,7 +12,6 @@ export class AuthorService {
   auths: Observable<AuthorModel[]>;
   constructor(private afs: AngularFirestore) {
     this.authsCollection = this.afs.collection<AuthorModel>('authors');
-    this.auths = this.authsCollection.valueChanges();
   }
 
   createAuthor(author: AuthorModel) {
