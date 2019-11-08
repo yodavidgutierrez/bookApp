@@ -16,6 +16,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { AuthorService } from './services/author/author.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { BookService } from './services/book.service';
 
 @NgModule({
   declarations: [
@@ -35,9 +38,10 @@ import { AuthorService } from './services/author/author.service';
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule, // required animations module
   ],
-  providers: [AuthorService],
+  providers: [AuthorService, BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

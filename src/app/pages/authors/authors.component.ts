@@ -10,7 +10,7 @@ import { AuthorModel } from 'src/app/models/author.model';
 export class AuthorsComponent implements OnInit {
   authorsList: AuthorModel[];
   cargando = false;
-  constructor(private authorService: AuthorService) { }
+  constructor(private authorService: AuthorService ) { }
 
   ngOnInit() {
     this.cargando = true;
