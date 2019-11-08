@@ -1,14 +1,14 @@
-import { map } from 'rxjs/operators';
+import { map, flatMap } from 'rxjs/operators';
 import { BookModel } from './../models/book.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { AuthorModel } from '../models/author.model';
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  private bookCollection: AngularFirestoreCollection<BookModel>;
+  public bookCollection: AngularFirestoreCollection<BookModel>;
   books: Observable<BookModel[]>;
   author = new AuthorModel();
   constructor(private afs: AngularFirestore) {
@@ -31,8 +31,57 @@ export class BookService {
         }))
   }
 
-  getAllBook() {
+ //me traer un arreglo con los autores y adentro otro arreglo con los libros como objetos !!importante se necesita al reves
+  /*getAllBook<T extends BookModel>( ) {
+      return this.afs.collection('authors')
+        .snapshotChanges()
+        .pipe(
+          map(this.convertSnapshots),
+          map((documents: T[]) =>
+            documents.map(document => {
+              return this.afs
+               .collection(`authors/${document.id}/books`)
+                .snapshotChanges()
+                .pipe(
+                  map(this.convertSnapshots),
+                  map(subdocuments =>
+                    Object.assign({ ['books']: subdocuments },document)
+                  )
+                );
+            })
+          ),
+          flatMap(combined => combineLatest(combined))
+        );
+    }
 
+     convertSnapshots<T>(snaps) {
+    return <T[]>snaps.map(snap => {
+      return {
+        id: snap.payload.doc.id,
+        ...snap.payload.doc.data()
+      };
+    });
+
+  }*/
+
+   /* getAllBook() {
+     return this.afs.collection('authors').get().subscribe((series: any) => series.forEach(item => {
+      this.afs.collection('authors').doc(item.id).collection('books')
+      .snapshotChanges().pipe(map(items => {
+        console.log(items);
+          return items.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          const serId = item.id;
+          return Object.assign({ id, serId, ...data });
+
+      });
+    }
+    ));
+  }));
+
+}*/
+getAllBook() {
 }
 
   updateBookById(book: BookModel) {

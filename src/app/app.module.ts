@@ -19,6 +19,7 @@ import { AuthorService } from './services/author/author.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { BookService } from './services/book.service';
+import { FilterBooksPipe } from './shared/filter-books.pipe';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { BookService } from './services/book.service';
     AuthorsComponent,
     HomeComponent,
     NavbarComponent,
+    FilterBooksPipe,
 
   ],
   imports: [

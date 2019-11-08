@@ -21,14 +21,18 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let list of bookList; let i = index">
+        <tr *ngFor=" let list of bookList ; let i = index;">
             <th scope="row">{{i+1}}</th>
-            <td>{{list.nombre}}</td>
-            <td>{{list.anio}}</td>
-            <td>{{list.autor}}</td>
+            <td>{{list.nombre}} {{list.apellido}}</td>
             <td>
-                <button class="btn btn-success" style="margin-right: 5px;" [routerLink]="['/book', list.id ]"><i class="fa fa-pen"></i> Modificar</button>
-                <button class="btn btn-danger" (click)="deleteBook( list.id, i) "><i class="fa fa-trash"></i> Eliminar</button>
+                <p *ngFor="let q of list.books">{{q.nombre}}</p>
+            </td>
+            <td>
+                <p *ngFor="let q of list.books">{{q.anio}}</p>
+            </td>
+            <td>
+                <button class="btn btn-success" style="margin-right: 5px;" [routerLink]="['/book', list.books.id ]"><i class="fa fa-pen"></i> Modificar</button>
+                <button class="btn btn-danger" (click)="deleteBook( list.books.id, i) "><i class="fa fa-trash"></i> Eliminar</button>
             </td>
         </tr>
     </tbody>
