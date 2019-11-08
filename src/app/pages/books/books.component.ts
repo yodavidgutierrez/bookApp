@@ -19,7 +19,8 @@ export class BooksComponent implements OnInit {
   this.bookService.getAllBook()
 }
 
-  deleteBook(id, i){
+  deleteBook(idAuthor,idBook,i){
+    this.bookService.deleteBook(idAuthor, idBook);
 
   }
 

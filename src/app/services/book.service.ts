@@ -88,9 +88,9 @@ getAllBook() {
     return this.afs.doc('books/'+book.id).set(JSON.parse(JSON.stringify(book)));
   }
 
-  deleteBook(id: string){
-    const booksDocuments = this.afs.doc<BookModel>('books/' + id).delete();
-    return booksDocuments;
+  deleteBook(idAuthor: string,idBook: string){
+
+    return this.afs.collection('authors').doc(idAuthor).collection('books').doc(idBook).delete();
 }
 
 }
