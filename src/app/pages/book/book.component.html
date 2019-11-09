@@ -27,7 +27,7 @@
                 <label>Año</label>
                 <input type="text" class="form-control" [(ngModel)]="book.anio" name="anio" placeholder="Año del libro" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" *ngIf="!this.idAuthor">
                 <label>Autor</label>
                 <div class="input-group mb-3">
                     <select class="custom-select" [(ngModel)]="book.autor" name="autor">

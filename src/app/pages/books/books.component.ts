@@ -12,11 +12,24 @@ import { map } from 'rxjs/operators';
 })
 export class BooksComponent implements OnInit {
   bookList: any[] = [];
+  authorsList: AuthorModel[];
   cargando = false;
-  constructor(private bookService: BookService, private authorService: AuthorService) { }
+  constructor(private bookService: BookService, private authorService: AuthorService) {
+    this.bookService.getAllBook().subscribe(res=> {
+      this.bookList = res.reduce( (prev, current) => {
+        if(!!current && !!current.books && current.books.length > 0) {
+           current.books.map((book: any) => {
+            book.authName = `${current.nombre} ${current.apellido}`;
+          })
+           prev = prev.concat(current.books);
+        }
+        return prev;
+      }, [])
+    })
+  }
 
   ngOnInit() {
-  this.bookService.getAllBook()
+
 }
 
   deleteBook(idAuthor,idBook,i){

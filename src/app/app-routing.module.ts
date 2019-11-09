@@ -9,7 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'books', component: BooksComponent },
-  { path: 'book/:id', component: BookComponent},
+  { path: 'book/:idAutor/:idBook', component: BookComponent},
   { path: 'authors', component: AuthorsComponent },
   { path: 'author/:id', component: AuthorComponent},
   { path: '**', pathMatch:'full', redirectTo: 'home' }

@@ -20,9 +20,9 @@ export class BookService {
     return this.afs.collection('authors').doc(id).collection('books').add(JSON.parse(JSON.stringify(book)))
   }
 
-  getBook(id: string): Observable<BookModel> {
-    const booksDocuments = this.afs.doc<BookModel>('books/' + id);
-    return booksDocuments.snapshotChanges()
+  getBook(idAuthor: string, idBook) {
+   return this.afs.collection('authors').doc(idAuthor).collection('books').doc(idBook)
+    .snapshotChanges()
       .pipe(
         map(changes => {
           const data = changes.payload.data();
@@ -32,7 +32,7 @@ export class BookService {
   }
 
  //me traer un arreglo con los autores y adentro otro arreglo con los libros como objetos !!importante se necesita al reves
-  /*getAllBook<T extends BookModel>( ) {
+  getAllBook<T extends AuthorModel>( ) {
       return this.afs.collection('authors')
         .snapshotChanges()
         .pipe(
@@ -62,30 +62,10 @@ export class BookService {
       };
     });
 
-  }*/
+  }
 
-   /* getAllBook() {
-     return this.afs.collection('authors').get().subscribe((series: any) => series.forEach(item => {
-      this.afs.collection('authors').doc(item.id).collection('books')
-      .snapshotChanges().pipe(map(items => {
-        console.log(items);
-          return items.map(a => {
-          const data = a.payload.doc.data();
-          const id = a.payload.doc.id;
-          const serId = item.id;
-          return Object.assign({ id, serId, ...data });
-
-      });
-    }
-    ));
-  }));
-
-}*/
-getAllBook() {
-}
-
-  updateBookById(book: BookModel) {
-    return this.afs.doc('books/'+book.id).set(JSON.parse(JSON.stringify(book)));
+  updateBookById(idAuthor,book: BookModel) {
+    return this.afs.collection('authors').doc(idAuthor).collection('books').doc(book.id).set(JSON.parse(JSON.stringify(book)));
   }
 
   deleteBook(idAuthor: string,idBook: string){
