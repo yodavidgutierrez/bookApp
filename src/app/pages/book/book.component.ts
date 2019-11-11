@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorService } from '../../services/author/author.service';
 import { BookService } from '../../services/book.service';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-book',
@@ -16,7 +17,7 @@ export class BookComponent implements OnInit {
   authorsList: AuthorModel[];
   libritos: any
   idAuthor: any;
-  constructor(private authorService: AuthorService, private bookService:BookService, private route: ActivatedRoute ) { }
+  constructor(private authorService: AuthorService, private bookService:BookService, private route: ActivatedRoute, private rr: Router ) { }
 
   ngOnInit() {
     this.authorService.getAllAuthors().subscribe( res => {
@@ -51,9 +52,22 @@ export class BookComponent implements OnInit {
     let peticion: Promise<any>;
    if(this.book.id ){
       peticion = this.bookService.updateBookById( this.idAuthor,this.book);
+      Swal.fire(
+        'Buen trabajo!',
+        'Se ha actualizado el libro  ' + this.book.nombre+'!!',
+        'success'
+      )
+      this.rr.navigate(['books']);
     }
     else{
+
       peticion = this.bookService.createBook(form.value.autor,  this.book);
+      Swal.fire(
+        'Buen trabajo!',
+        'Se ha registrado un nuevo libro!',
+        'success'
+      )
+      this.rr.navigate(['books']);
    }
 
   }

@@ -3,8 +3,9 @@ import { AuthorModel } from 'src/app/models/author.model';
 import { NgForm } from '@angular/forms';
 import { AuthorService } from '../../services/author/author.service';
 import {map} from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-author',
@@ -15,7 +16,7 @@ export class AuthorComponent implements OnInit {
 
   author =  new AuthorModel();
 
-  constructor(private authorService: AuthorService,private route: ActivatedRoute) { }
+  constructor(private authorService: AuthorService,private route: ActivatedRoute, private rr:Router) { }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -38,13 +39,22 @@ export class AuthorComponent implements OnInit {
     let peticion: Promise<any>;
     if(this.author.id ){
       peticion = this.authorService.updateAuthorById( this.author);
-
-      console.log(this.author.id);
+      Swal.fire(
+        'Buen trabajo!',
+        'Se ha actualizado el autor  ' + this.author.nombre+'!!',
+        'success'
+      )
+      this.rr.navigate(['authors'])
     }
     else{
       peticion = this.authorService.createAuthor(this.author);
-      console.log(this.author.id);
-      console.log(form.value.id);
+      Swal.fire(
+        'Buen trabajo!',
+        'Se ha registrado un nuevo autor!',
+        'success'
+      )
+
+      this.rr.navigate(['authors'])
     }
 
   }

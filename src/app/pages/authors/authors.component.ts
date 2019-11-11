@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorService } from '../../services/author/author.service';
 import { AuthorModel } from 'src/app/models/author.model';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-authors',
@@ -28,8 +29,26 @@ export class AuthorsComponent implements OnInit {
 
   deleteAuthor( id:string, i: number){
     console.log(id);
-    this.authorsList.splice(i, 1);
+    Swal.fire({
+      title: 'Esta seguro que desea eliminar el autor?',
+      text: "No vas a ser capaz de revertir este cambio!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminalo!'
+    }).then((result) => {
+      if (result.value) {
+        this.authorsList.splice(i, 1);
     this.authorService.deleteAuthor( id );
+        Swal.fire(
+          'Autor eliminado!',
+          'El autor ha sido eliminado.',
+          'success'
+        )
+      }
+    })
+
   }
 
 
